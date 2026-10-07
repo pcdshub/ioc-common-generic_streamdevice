@@ -9,6 +9,7 @@ epicsEnvSet( "IOCTOP",	  "$$IOCTOP" )
 epicsEnvSet( "STREAM_PROTOCOL_PATH", "$(IOCTOP)/app/srcProtocol" )
 < envPaths
 epicsEnvSet("TOP", "$$TOP")
+epicsEnvSet("ACF_FILE", "$(IOCTOP)/iocBoot/templates/unrestricted.acf")
 cd("$(IOCTOP)")
 
 # Run common startup commands for linux soft IOC's
@@ -57,8 +58,22 @@ save_restoreSet_DatedBackupFiles( 1 )
 set_pass0_restoreFile( "autoSettings.sav" )
 set_pass0_restoreFile( "$$IOCNAME.sav" )
 
+# Configure access security: this is required for caPutLog.
+asSetFilename("$(ACF_FILE)")
+
 # Initialize the IOC and start processing records
 iocInit()
+
+# Enable logging
+iocLogInit()
+
+# caPutLogInit("HOST:PORT", config)
+# config options:
+#       caPutLogNone       -1: no logging (disable)
+#       caPutLogOnChange    0: log only on value change
+#       caPutLogAll         1: log all puts
+#       caPutLogAllNoFilter 2: log all puts no filtering on same PV
+caPutLogInit("${EPICS_CAPUTLOG_HOST}:${EPICS_CAPUTLOG_PORT}", 0)
 
 # Create autosave files from info directives
 makeAutosaveFileFromDbInfo( "$(IOC_DATA)/$(IOC)/autosave/autoSettings.req", "autosaveFields" )
