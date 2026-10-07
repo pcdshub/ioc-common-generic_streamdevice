@@ -61,6 +61,9 @@ set_pass0_restoreFile( "$$IOCNAME.sav" )
 # Configure access security: this is required for caPutLog.
 asSetFilename("$(ACF_FILE)")
 
+# Set the caPutLog file location
+caPutLogFile("$(IOC_DATA)/$(IOC)/logs/caPutLog.log")
+
 # Initialize the IOC and start processing records
 iocInit()
 
