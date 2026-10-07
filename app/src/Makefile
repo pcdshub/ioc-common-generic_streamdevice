@@ -22,6 +22,7 @@ gsd_DBD += asyn.dbd
 gsd_DBD += drvAsynSerialPort.dbd
 gsd_DBD += drvAsynIPPort.dbd
 gsd_DBD += stream.dbd
+gsd_DBD += caPutLog.dbd
 
 # <name>_registerRecordDeviceDriver.cpp will be created from <name>.dbd
 gsd_SRCS += gsd_registerRecordDeviceDriver.cpp
@@ -34,6 +35,7 @@ gsd_LIBS += devIocStats
 gsd_LIBS += autosave
 gsd_LIBS += asyn
 gsd_LIBS += stream
+gsd_LIBS += caPutLog
 gsd_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 ifneq '$(T_A)' 'RTEMS-beatnik'
